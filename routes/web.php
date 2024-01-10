@@ -12,6 +12,10 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PoController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BarangKeluarController;
 
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -43,13 +47,43 @@ Route::middleware('auth')->group(function () {
         Route::get('/oil/download/pdf', 'App\Http\Controllers\OilController@downloadPdf')->name('oil.download.pdf');
     });
 
-    Route::controller(OilController::class)->prefix('kategori')->group(function () {
+    Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
         Route::get('/kategori/data',[KategoriController::class,'data'])->name('kategori.data');
         Route::resource('/kategori', KategoriController::class);
 
 
     });
+    Route::controller(PoController::class)->prefix('po')->group(function () {
+        Route::get('/data', [PoController::class, 'data'])->name('po.data');
+        Route::post('/po/delete-selected', [PoController::class, 'deleteSelected'])->name('po.delete_selected');
+        // Route::post('/produk/cetak-barcode', [PoController::class, 'cetakBarcode'])->name('produk.cetak_barcode');
+        Route::resource('po', PoController::class);
+        Route::get('/get-barang-info',[PoController::class, 'getBarangInfo'])->name('po.get_barang_info');
+        Route::get('/get-barang-options',[PoController::class, 'getBarangOptions'])->name('po.get_barang_options');
+    });
 
+    Route::controller(BarangController::class)->prefix('barang')->group(function () {
+        Route::get('/data', [BarangController::class, 'data'])->name('barang.data');
+        Route::post('/delete-selected', [BarangController::class, 'deleteSelected'])->name('barang.delete_selected');
+        // Route::post('/produk/cetak-barcode', [PoController::class, 'cetakBarcode'])->name('produk.cetak_barcode');
+        Route::resource('barang', BarangController::class);
+    });
+
+    Route::controller(BarangMasukController::class)->prefix('barangmasuk')->group(function () {
+        Route::get('/data', [BarangMasukController::class, 'data'])->name('barangmasuk.data');
+        Route::post('/delete-selected', [BarangController::class, 'deleteSelected'])->name('barangmasuk.delete_selected');
+        // Route::post('/produk/cetak-barcode', [PoController::class, 'cetakBarcode'])->name('produk.cetak_barcode');
+        Route::get('/get-barang-info',[ BarangMasukController::class, 'getPoInfo'])->name('barangmasuk.get_po_info');
+        Route::get('/get-barang-options',[ BarangMasukController::class, 'getPoOptions'])->name('barangmasuk.get_po_options');
+        Route::resource('barangmasuk', BarangMasukController::class);
+    });
+
+    Route::controller(BarangKeluarController::class)->prefix('barangkeluar')->group(function () {
+        Route::get('/data', [BarangKeluarController::class, 'data'])->name('barangkeluar.data');
+        // Route::post('/delete-selected', [BarangController::class, 'deleteSelected'])->name('barang.delete_selected');
+        // Route::post('/produk/cetak-barcode', [PoController::class, 'cetakBarcode'])->name('produk.cetak_barcode');
+        Route::resource('barangkeluar', BarangKeluarController::class);
+    });
 
     Route::prefix('inventory')->group(function () {
         Route::get('/', [InventoryController::class, 'index'])->name('inventory.index');
@@ -69,6 +103,10 @@ Route::middleware('auth')->group(function () {
     Route::controller(CustomController::class)->prefix('custom')->group(function () {
         Route::get('/', [CustomController::class, 'index'])->name('custom');
         Route::get('/showcustom/{conID}', [CustomController::class, 'showcustom'])->name('custom.showcustom');
+        Route::get('/custom/export/csv/{condemIDs}', 'App\Http\Controllers\CustomController@exportCsv')->name('custom.export.csv');
+        Route::get('/custom/export/pdf/{condemIDs}', 'App\Http\Controllers\CustomController@exportPdf')->name('custom.export.pdf');
+        Route::get('/custom/download/pdf', 'App\Http\Controllers\CustomController@downloadPdf')->name('custom.download.pdf');
+
     });
 
     // Route::get('/custom', [CustomController::class, 'index'])->name('custom');

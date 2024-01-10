@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>
 
-    <!-- Add your CSS and other head elements here -->
+<head>
 </head>
+
 <body>
     <div class="container mt-4">
         <hr>
@@ -18,42 +18,42 @@
                             <label for="{{ Str::slug($columns[$index]) }}"
                                 class="form-label">{{ getLastWord($columns[$index]) }}</label>
                             <input type="text" id="{{ Str::slug($columns[$index]) }}" class="form-control"
-                                value="{{ $oil[$columns[$index]] }}" readonly>
+                                value="{{ parseValue(getLastWord($columns[$index]), $oil[$columns[$index]]) }}" readonly>
                         </div>
                     @endif
                 @endfor
             </div>
             <br>
         @endforeach
-
     </div>
-
-    <!-- Add your JavaScript and other script elements here -->
 </body>
+
 </html>
 
 @php
-    function getPrefix($name)
-    {
-        $prefixes = ['min', 'max', 'border', 'per', 'ket'];
-
-        foreach ($prefixes as $prefix) {
-            if (strpos($name, $prefix) === 0) {
-                return $prefix;
-            }
-        }
-
-        return $name;
-    }
 
     function getLastWord($str)
-{
-    $words = explode(' ', $str);
-    $lastWord = end($words);
+    {
+        $words = explode(' ', $str);
+        $lastWord = end($words);
+        $capitalizedLastWord = ucfirst($lastWord);
+        return $capitalizedLastWord;
+    }
 
-    // Membuat huruf pertama dari kata menjadi huruf kapital
-    $capitalizedLastWord = ucfirst($lastWord);
-
-    return $capitalizedLastWord;
-}
+    function parseValue($type, $value)
+    {
+        if ($type != 'Per') {
+            return $value;
+        }
+        if ($value == '1') {
+            return 'Percent / %';
+        }
+        if ($value == '0') {
+            return 'Numeric';
+        }
+        if ($value == '-') {
+            return 'None';
+        }
+        return $value;
+    }
 @endphp

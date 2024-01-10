@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('industry', function (Blueprint $table) {
-            $table->bigIncrements('industryID');
-            $table->string('industryName');
+        Schema::table('barang', function (Blueprint $table) {
+            $table->foreign('id_po')
+            ->references('id_po')
+            ->on('po')
+            ->onUpdate('restrict')
+            ->onDelete('restrict');
         });
     }
 
@@ -22,6 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('industry');
+        Schema::table('barang', function (Blueprint $table) {
+            $table->dropForeign('barang_id_po_foreign');
+        });
     }
 };

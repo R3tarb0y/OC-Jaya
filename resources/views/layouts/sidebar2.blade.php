@@ -33,17 +33,27 @@
                 <i class="fa fa-cube"></i> <span>Kategori</span>
             </a>
         </li>
+        <li>
+            <a href="{{ route('barang.index') }}">
+                <i class="fa fa-cube"></i> <span>Barang</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('po.index') }}">
+                <i class="fa fa-cubes"></i> <span>PO Barang</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('barangmasuk.index') }}">
+                <i class="fa fa-cart-arrow-down"></i> <span>Barang Masuk</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('barangkeluar.index') }}">
+                <i class="fa fa-cart-arrow-down"></i> <span>Barang Keluar</span>
+            </a>
+        </li>
         {{-- <li>
-            <a href="{{ route('produk.index') }}">
-                <i class="fa fa-cubes"></i> <span>Produk</span>
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('member.index') }}">
-                <i class="fa fa-id-card"></i> <span>Member</span>
-            </a>
-        </li>
-        <li>
             <a href="{{ route('supplier.index') }}">
                 <i class="fa fa-truck"></i> <span>Supplier</span>
             </a>
@@ -73,14 +83,19 @@
             <a href="{{ route('transaksi.baru') }}">
                 <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
             </a>
-        </li>
+        </li> --}}
         <li class="header">REPORT</li>
         <li>
-            <a href="{{ route('laporan.index') }}">
-                <i class="fa fa-file-pdf-o"></i> <span>Laporan</span>
+            <a href="">
+                <i class="fa fa-download"></i> <span>Rekap Barang Masuk</span>
             </a>
         </li>
-        <li class="header">SYSTEM</li>
+        <li>
+            <a href="">
+                <i class="fa fa-upload"></i> <span>Rekap Barang Keluarr</span>
+            </a>
+        </li>
+        {{-- <li class="header">SYSTEM</li>
         <li>
             <a href="{{ route('user.index') }}">
                 <i class="fa fa-users"></i> <span>User</span>
